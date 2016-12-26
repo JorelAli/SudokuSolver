@@ -11,7 +11,6 @@ public class Main {
 	}
 	
 	public Visualiser v;
-	
 
 	// Starting off with a general 9x9 grid. Will be customisable later
 	public int[][] grid;
@@ -132,6 +131,15 @@ public class Main {
 	
 	
 
+	/**
+	 * Returns an int[][] which contains the numbers of a sudoku problem
+	 * @param difficulty a number which identifies the difficulty of a problem:
+	 * 		<li>0 - Easy puzzle which can be solved without backtracking</li>
+	 * 		<li>1 - Advanced puzzle which doesn't require backtracking</li>
+	 * 		<li>2, 3, 4 - Harder puzzles which SHOULDN'T require backtracking</li>
+	 * @param grid
+	 * @return
+	 */
 	public int[][] generateSpecificSudokuGrid(int difficulty, int[][] grid) {
 		switch(difficulty) {
 		case 0:
