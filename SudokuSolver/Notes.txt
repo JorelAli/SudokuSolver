@@ -1,0 +1,37 @@
+[6:06:29 PM] Jorel: okay
+[6:06:31 PM] Jorel: here we go
+[6:06:45 PM] Jorel: this is the new brand new amazing super awesome feature which will be awesome and took me forever to discover
+[6:07:07 PM] Jorel: right
+[6:07:10 PM] Jorel: so basically
+[6:07:17 PM] Jorel: Given a 3x3 box
+[6:07:23 PM] Jorel: and given a single cell
+[6:07:45 PM] Jorel: We use this new algorithm thingy which will analyse that box with respect to the rows/columns and 3x3 box thingies
+[6:07:50 PM] Jorel: So basically
+[6:07:58 PM] Jorel: say we have an empty box in the top left hand corner
+[6:08:01 PM] Jorel: Right
+[6:08:04 PM] Jorel: what we do here
+[6:08:07 PM] Jorel: is we look at it
+[6:08:16 PM] Jorel: and look at all of the other cells in the 3x3 grid which it's in
+[6:08:37 PM] Jorel: and if each of the 3x3 grid empty boxes have random numbers (for example)
+[6:08:45 PM] Jorel: BUT NONE of them contain the number 9
+[6:08:54 PM] Jorel: AND the box we're looking at CAN have the number 9
+[6:08:59 PM] Jorel: then we set that box as the number 9
+[6:09:14 PM] Jorel: and then we do this for all of the rows and columns as well
+[6:09:15 PM] Jorel: so like
+[6:09:16 PM] Jorel: yeah
+[6:09:21 PM] Jorel: this is the new thing that I've thought of
+[6:09:29 PM] Jorel: and idk if this would even work
+[6:09:33 PM] Jorel: and I've not even tested it myself
+[6:09:35 PM] Jorel: (As a human)
+[6:09:40 PM] Jorel: and I should probably do that
+[6:09:49 PM] Jorel: because IF this method proves ineffective
+[6:09:53 PM | Edited 6:09:48 PM] Jorel: then it's not worth investing in it
+[6:09:58 PM] Jorel: HOWEVER
+[6:10:15 PM] Jorel: What I REALLY don't want to do is attempt the backtracking method (which is the "conventional" Sudoku solving algorithm)
+[6:10:32 PM] Jorel: which basically tries values until it fails, then goes and tries new values until it eventually works basically
+[6:10:37 PM] Jorel: SO
+[6:10:53 PM] Jorel: I want to find a way to locate "key" boxes
+[6:11:13 PM] Jorel: which, when a number has been entered, it would be able to solve many many boxes (and hence solve the entire puzzle)
+[6:11:43 PM] Jorel: and to do that, you'd ideally need to have a box in a row/3x3grid/column where each other box has EITHER a lot of possibilities or very few possibilities
+[6:12:02 PM] Jorel: if it's a lot of possibilities, then IF it eliminates those possibilities, it may be more effective
+[6:12:24 PM] Jorel: HOWEVER, if the other boxes has little possibilities, it may set off a chain reaction with relative boxes with similar requirements
