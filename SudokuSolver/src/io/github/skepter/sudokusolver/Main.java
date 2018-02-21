@@ -37,12 +37,10 @@ public class Main {
 		grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
 		int[][] gridSolution = generateSpecificSudokuGrid(-1, new int[gridSize][gridSize]);
 		
-		int minX = 0;
-		int minY = 0;
+		
 		v = new Visualiser(grid, gridSize, "Sudoku");
 		
-		boolean solvable = false;
-		grid[0][1] = 7;
+		grid[0][2] = 6;
 		System.out.println(solveByCalculation());
 		
 		/*
@@ -50,30 +48,34 @@ public class Main {
 		 * solvable. Is this the ONLY "solution" via one square? 
 		 */
 		
-		while(minX + minY != 16) {
+		//while(minX + minY != 16) {
 			//Regenerate old grid
-			grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
-			v = new Visualiser(grid, gridSize, "Sudoku");
-
-			gridLoop: for(; minX < gridSize; ++minX) {
-				for(; minY < gridSize; ++minY) {
+			
+		boolean test = true;
+		if(test) {
+			for(int minX = 0; minX < gridSize; ++minX) {
+				for(int minY = 0; minY < gridSize; ++minY) {
+					//regenerate old grid
+					grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
+					v = new Visualiser(grid, gridSize, "Sudoku");
 					if(grid[minX][minY] == 0) {
 						grid[minX][minY] = gridSolution[minX][minY];
-						break gridLoop;
+					}
+					
+					if(solveByCalculation()) {
+						//https://www.java-forums.org/awt-swing/19693-how-run-joptionpane-showmessagedialog-background.html#post77063
+						JDialog dialog = new JDialog(v, false); // Sets its owner but makes it non-modal 
+						JOptionPane optionPane = new JOptionPane("minX " + minX + ", minY " + minY); // Same arguments as in JOptionPane.showMessageDialog(...)
+						dialog.getContentPane().add(optionPane); // Adds the JOptionPane to the dialog
+						dialog.pack(); // Packs the dialog so that the JOptionPane can be seen
+						dialog.setVisible(true); // Shows the dialog
+						dialog.setLocationRelativeTo(null);
 					}
 				}
 			}
-			solvable = solveByCalculation();
-			if(solvable) {
-				//https://www.java-forums.org/awt-swing/19693-how-run-joptionpane-showmessagedialog-background.html#post77063
-				JDialog dialog = new JDialog(v, false); // Sets its owner but makes it non-modal 
-				JOptionPane optionPane = new JOptionPane("minX " + minX + ", minY " + minY); // Same arguments as in JOptionPane.showMessageDialog(...)
-				dialog.getContentPane().add(optionPane); // Adds the JOptionPane to the dialog
-				dialog.pack(); // Packs the dialog so that the JOptionPane can be seen
-				dialog.setVisible(true); // Shows the dialog
-				dialog.setLocationRelativeTo(null);
-			}
 		}
+			
+		//}
 		
 		
 		
@@ -462,7 +464,7 @@ public class Main {
 		if (changes != 0) {
 			iteration++;
 			changes = 0;
-			solveByCalculation();
+			return solveByCalculation();
 		} else {
 			for (int i = 0; i < gridSize; i++) {
 				for (int j = 0; j < gridSize; j++) {
