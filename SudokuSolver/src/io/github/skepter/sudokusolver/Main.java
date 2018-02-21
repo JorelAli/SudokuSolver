@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -22,7 +25,60 @@ public class Main {
 	public static final int gridSize = miniGridSize * miniGridSize;
 	
 	public Main() {
-				
+		
+		/*
+		 * Trying to see if, given an "unsolvable puzzle", adding ONE number can
+		 * make all of the difference. If so, then I'll look to see if there's a
+		 * way to determine said number via analysis of the board.
+		 * 
+		 * This assumes that this puzzle is a proper puzzle (it has one solution)
+		 */
+		
+		grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
+		int[][] gridSolution = generateSpecificSudokuGrid(-1, new int[gridSize][gridSize]);
+		
+		int minX = 0;
+		int minY = 0;
+		v = new Visualiser(grid, gridSize, "Sudoku");
+		
+		boolean solvable = false;
+		grid[0][1] = 7;
+		System.out.println(solveByCalculation());
+		
+		/*
+		 * So apparently, by adding grid[0][1] = 7, the puzzle suddenly becomes
+		 * solvable. Is this the ONLY "solution" via one square? 
+		 */
+		
+		while(minX + minY != 16) {
+			//Regenerate old grid
+			grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
+			v = new Visualiser(grid, gridSize, "Sudoku");
+
+			gridLoop: for(; minX < gridSize; ++minX) {
+				for(; minY < gridSize; ++minY) {
+					if(grid[minX][minY] == 0) {
+						grid[minX][minY] = gridSolution[minX][minY];
+						break gridLoop;
+					}
+				}
+			}
+			solvable = solveByCalculation();
+			if(solvable) {
+				//https://www.java-forums.org/awt-swing/19693-how-run-joptionpane-showmessagedialog-background.html#post77063
+				JDialog dialog = new JDialog(v, false); // Sets its owner but makes it non-modal 
+				JOptionPane optionPane = new JOptionPane("minX " + minX + ", minY " + minY); // Same arguments as in JOptionPane.showMessageDialog(...)
+				dialog.getContentPane().add(optionPane); // Adds the JOptionPane to the dialog
+				dialog.pack(); // Packs the dialog so that the JOptionPane can be seen
+				dialog.setVisible(true); // Shows the dialog
+				dialog.setLocationRelativeTo(null);
+			}
+		}
+		
+		
+		
+		
+		/*
 		
 		grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
 		iteration = 0;
@@ -62,6 +118,8 @@ public class Main {
 //		System.out.println("Program took: " + (System.currentTimeMillis() - before) + " milliseconds");
 //		
 //		solveByBacktracking();
+ * */
+ 
 	}
 	
 	/**
@@ -168,6 +226,20 @@ public class Main {
 				new int[] { 0, 2, 0, 0, 0, 9, 1, 4, 0 }, 
 				new int[] { 6, 0, 1, 2, 5, 0, 8, 0, 9 }, 
 				new int[] { 0, 0, 0, 0, 0, 1, 0, 0, 2 }, 
+			};
+			break;
+		case -1:
+			//Same as number 1, except this is the solved grid
+			grid = new int[][] { 
+				new int[] { 2, 7, 6, 3, 1, 4, 9, 5, 8 }, 
+				new int[] { 8, 5, 4, 9, 6, 2, 7, 1, 3 }, 
+				new int[] { 9, 1, 3, 8, 7, 5, 2, 6, 4 }, 
+				new int[] { 4, 6, 8, 1, 2, 7, 3, 9, 5 }, 
+				new int[] { 5, 9, 7, 4, 3, 8, 6, 2, 1 }, 
+				new int[] { 1, 3, 2, 5, 9, 6, 4, 8, 7 }, 
+				new int[] { 3, 2, 5, 7, 8, 9, 1, 4, 6 }, 
+				new int[] { 6, 4, 1, 2, 5, 3, 8, 7, 9 }, 
+				new int[] { 7, 8, 9, 6, 4, 1, 5, 3, 2 }, 
 			};
 			break;
 		case 2:
@@ -363,7 +435,7 @@ public class Main {
 
 					if(possibleNumbers.size() == 0) {
 						changes = 0;
-						System.out.println("Sudoku puzzle is impossible (cannot be solved) - Like ACTUALLY impossible. Not even a computer can solve this");
+						System.out.println("Sudoku puzzle is impossible (cannot be solved using normal methods)");
 						return false;
 					}
 					if (possibleNumbers.size() == 1) {
