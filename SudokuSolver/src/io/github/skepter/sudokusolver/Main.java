@@ -51,21 +51,28 @@ public class Main {
 		//while(minX + minY != 16) {
 			//Regenerate old grid
 			
-		boolean test = true;
+		//From this test, we get the results (1, 6) and (0, 1)
+		boolean test = false; //Controlling output. I want to keep this code uncommented for now
 		if(test) {
-			for(int minX = 0; minX < gridSize; ++minX) {
-				for(int minY = 0; minY < gridSize; ++minY) {
+			//Loop through all cells in the grid
+			for(int row = 0; row < gridSize; ++row) {
+				for(int col = 0; col < gridSize; ++col) {
 					//regenerate old grid
 					grid = generateSpecificSudokuGrid(1, new int[gridSize][gridSize]);
+					//Add visualizer because we need to
 					v = new Visualiser(grid, gridSize, "Sudoku");
-					if(grid[minX][minY] == 0) {
-						grid[minX][minY] = gridSolution[minX][minY];
+					
+					//Check the columns and rows for empty values. If empty
+					//Then add the correct answer and solve the sudoku puzzle.
+					//If it's solvable, output the answer (as a dialog because console is messy)
+					if(grid[row][col] == 0) {
+						grid[row][col] = gridSolution[row][col];
 					}
 					
 					if(solveByCalculation()) {
 						//https://www.java-forums.org/awt-swing/19693-how-run-joptionpane-showmessagedialog-background.html#post77063
 						JDialog dialog = new JDialog(v, false); // Sets its owner but makes it non-modal 
-						JOptionPane optionPane = new JOptionPane("minX " + minX + ", minY " + minY); // Same arguments as in JOptionPane.showMessageDialog(...)
+						JOptionPane optionPane = new JOptionPane("minX " + row + ", minY " + col); // Same arguments as in JOptionPane.showMessageDialog(...)
 						dialog.getContentPane().add(optionPane); // Adds the JOptionPane to the dialog
 						dialog.pack(); // Packs the dialog so that the JOptionPane can be seen
 						dialog.setVisible(true); // Shows the dialog
@@ -75,6 +82,38 @@ public class Main {
 			}
 		}
 			
+		/*
+		 * Given our test results (0, 1) and (1, 6), that then begs the question:
+		 * What's so special about (0, 1) and (1, 6)?
+		 * 
+		 * For that, I plan to use my relationship table (which, from this point onwards, I'm renaming 
+		 * it as a relationship matrix (because it's not really a table...)
+		 */
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//}
 		
 		
