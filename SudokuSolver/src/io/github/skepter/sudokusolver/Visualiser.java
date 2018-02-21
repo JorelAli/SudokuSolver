@@ -42,5 +42,14 @@ public class Visualiser extends JFrame {
 			}
 		}
 	}
+	
+	/**
+	 * Toggles the button in the visualizer
+	 * @param row
+	 * @param col
+	 */
+	public void toggle(int row, int col) {
+		view[row][col].setSelected(!view[row][col].isSelected());
+	}
 
 }

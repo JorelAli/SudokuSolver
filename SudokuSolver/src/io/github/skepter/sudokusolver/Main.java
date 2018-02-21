@@ -24,6 +24,12 @@ public class Main {
 	public static final int miniGridSize = 3;
 	public static final int gridSize = miniGridSize * miniGridSize;
 	
+	/**
+	 * This constructor is where all of the main code runs. From here onwards,
+	 * I'll be using this constructor as a form of chronological "lab diary"
+	 * which documents the code I create, the tests I run and gives a walk
+	 * through my thought process.
+	 */
 	public Main() {
 		
 		/*
@@ -40,20 +46,17 @@ public class Main {
 		
 		v = new Visualiser(grid, gridSize, "Sudoku");
 		
-		grid[0][2] = 6;
-		System.out.println(solveByCalculation());
+		//grid[0][2] = 6;
+		//System.out.println(solveByCalculation());
 		
 		/*
 		 * So apparently, by adding grid[0][1] = 7, the puzzle suddenly becomes
 		 * solvable. Is this the ONLY "solution" via one square? 
 		 */
-		
-		//while(minX + minY != 16) {
-			//Regenerate old grid
 			
 		//From this test, we get the results (1, 6) and (0, 1)
-		boolean test = false; //Controlling output. I want to keep this code uncommented for now
-		if(test) {
+		boolean cellAnalysis = false; //Controlling output. I want to keep this code uncommented for now
+		if(cellAnalysis) {
 			//Loop through all cells in the grid
 			for(int row = 0; row < gridSize; ++row) {
 				for(int col = 0; col < gridSize; ++col) {
@@ -71,7 +74,7 @@ public class Main {
 					
 					if(solveByCalculation()) {
 						//https://www.java-forums.org/awt-swing/19693-how-run-joptionpane-showmessagedialog-background.html#post77063
-						JDialog dialog = new JDialog(v, false); // Sets its owner but makes it non-modal 
+						JDialog dialog = new JDialog(v, false); // Sets its owner but makes it non-modal (doesn't pause execution)
 						JOptionPane optionPane = new JOptionPane("minX " + row + ", minY " + col); // Same arguments as in JOptionPane.showMessageDialog(...)
 						dialog.getContentPane().add(optionPane); // Adds the JOptionPane to the dialog
 						dialog.pack(); // Packs the dialog so that the JOptionPane can be seen
@@ -90,8 +93,12 @@ public class Main {
 		 * it as a relationship matrix (because it's not really a table...)
 		 */
 		
-		
-		
+		//Firstly, we create our relationship matrix of our current unsolved sudoku puzzle:
+		v.toggle(0, 1);
+		v.toggle(1, 6);
+		Visualiser rMatrix = new Visualiser(generateRelationshipTable(), gridSize, "Relationship matrix of unsolved puzzle");
+		rMatrix.toggle(0, 1);
+		rMatrix.toggle(1, 6);
 		
 		
 		
